@@ -2,7 +2,6 @@
 '''Cairoplot installation script.'''
 
 from distutils.core import setup
-import os
 
 setup(
     description='Cairoplot',
@@ -13,8 +12,7 @@ setup(
         websites and papers.
         ''',
     name='Cairoplot',
-    py_modules=['cairoplot','series'],
-    url='http://rodrigoaraujo01.github.com/cairoplot/',
-    version='1.2',
-    )
-
+    py_modules=['cairoplot', 'series'],
+    url='https://github.com/m-labs/cairoplot3',
+    version='3.1.2',
+)

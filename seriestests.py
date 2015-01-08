@@ -6,7 +6,7 @@ from series import Series
 # non-random data for needs of visual comparison of changes
 if '--non-random' in sys.argv:
     random = lambda : 1.0
-    print 'Plotting nonrandom data'
+    print('Plotting nonrandom data')
 else:
     import random
     random = random.random
@@ -86,7 +86,7 @@ if test_dot_line_plot:
                              axis = True, grid = True, series_legend = True )
 
     #Speed test, many x_labels
-    data = range(1000)
+    data = list(range(1000))
     x_labels = [str(x) for x in data]
     cairoplot.dot_line_plot( 'dot_line_4_many_x_labels.png', data, 14000, 300, x_labels = x_labels, 
                              axis = True, grid = True, series_legend = True )
