@@ -109,7 +109,6 @@ class Plot:
                  x_labels = None,
                  y_labels = None,
                  series_colors = None):
-        random.seed(2)
         self.create_surface(surface, width, height)
         self.dimensions = {}
         self.dimensions[HORZ] = width
