@@ -109,12 +109,15 @@ class Plot:
                  x_labels = None,
                  y_labels = None,
                  series_colors = None):
-        self.create_surface(surface, width, height)
+        if isinstance(surface, cairo.Context):
+            self.context = surface
+        else:
+            self.create_surface(surface, width, height)
+            self.context = cairo.Context(self.surface)
         self.dimensions = {}
         self.dimensions[HORZ] = width
         self.dimensions[VERT] = height
-        self.context = cairo.Context(self.surface)
-        self.labels={}
+        self.labels = {}
         self.labels[HORZ] = x_labels
         self.labels[VERT] = y_labels
         self.load_series(data, x_labels, y_labels, series_colors)
@@ -148,6 +151,8 @@ class Plot:
             self.surface = cairo.SVGSurface(self.filename, width, height)
 
     def commit(self):
+        if not hasattr(self, "surface"):
+            return
         try:
             self.context.show_page()
             if self.filename and self.filename.endswith(".png"):
@@ -230,10 +235,10 @@ class Plot:
                             self.series_colors[index] += tuple([mode])
 
     def get_width(self):
-        return self.surface.get_width()
+        return self.dimensions[HORZ]
     
     def get_height(self):
-        return self.surface.get_height()
+        return self.dimensions[VERT]
 
     def set_background(self, background):
         if background is None:
@@ -1432,7 +1437,7 @@ class VerticalBarPlot(BarPlot):
                         self.context.fill()
                     y0 += data.content*self.steps[VERT]
         else:
-            for i,group in enumerate(self.series):
+            for i, group in enumerate(self.series):
                 inner_step = self.steps[HORZ]/len(group)
                 y0 = self.borders[VERT]
                 x0 = self.borders[HORZ] + i*self.steps[HORZ] + (i+1)*self.space
